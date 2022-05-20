@@ -10,7 +10,7 @@ var currentTimeEl = $("#currentDay");
 currentTimeEl.text(currentTimeDate);
 
 var thisID = null;
-/*
+
 var loadScheduleArrayItem = function() {
 
     if (localStorage.getItem('scheduleListArr') != null){
@@ -24,12 +24,14 @@ var loadScheduleArrayItem = function() {
     else {
         scheduleListArr = ["","","","","","","","",]
     }
-}*/
+}
 
 var displaySchedule = function() {
 //load tasks from storage
 //if local storage is not empty
-//loadScheduleArrayItem();
+loadScheduleArrayItem();
+
+console.log(moment().add(1, "hour"));
 
 //loop through everything and display it
   
@@ -41,15 +43,28 @@ var displaySchedule = function() {
         var timeBoxEl = $("<div>").addClass("col-1 m-auto text-center");
         var timeTextEl = $("<p>");
         $(timeTextEl).text(moment().hour(9+i).format("h A"));
-
+        
         //Schedule items - box and text
         var scheduleBoxEl = $("<div>").addClass("col-10 bg-secondary text-white");
         var scheduleTextEl = $("<input>").attr("id", "schedule-item-" + i).attr("type", "text").addClass("bg-secondary");
-        $(scheduleTextEl).val('').addClass(" w-100 h-100 .bg-secondary");
-        
+        $(scheduleTextEl).addClass(" w-100 h-100 .bg-secondary");
+
+        //if the current time is after timeTextEl
+        if (moment().isAfter(timeTextEl)) {
+            $(scheduleBoxEl).removeClass("bg-secondary").addClass("bg-danger");
+            $(scheduleTextEl).removeClass("bg-secondary").addClass("bg-danger");
+        } 
+        if (moment().isAfter(moment().add(1, "hour"))) {
+            debugger;
+            $(scheduleBoxEl).removeClass("bg-secondary").addClass("bg-success");
+            $(scheduleTextEl).removeClass("bg-secondary").addClass("bg-success");
+        }
+
         //load scheduleListArr, then 
-        
-        scheduleTextEl = scheduleListArr[i];
+        if (scheduleListArr[i] != ""){
+                    scheduleTextEl.val(scheduleListArr[i]);
+
+        }
 
        
             
@@ -71,7 +86,20 @@ var displaySchedule = function() {
 
         //SAVE FUNCTION
         $(saveBoxEl).on("click", function() {
-             // saveFunction();
+            var thisSaveID = $(this)
+            .attr("id")
+            .replace("save-box-", "");
+            
+        thisID = thisSaveID;
+        
+        var scheduleText = $("#schedule-item-" + thisID).val();
+        //console.log(scheduleText);
+        
+        scheduleListArr[thisID] = scheduleText;
+        console.log(scheduleListArr);
+          
+            
+            saveFunction();
      
     });
 
@@ -93,22 +121,11 @@ var displaySchedule = function() {
 }
 
 var saveFunction = function() {
-    var thisSaveID = $(this)
-    .attr("id")
-    .replace("save-box-", "");
-    
-thisID = thisSaveID;
-
-var scheduleText = $("#schedule-item-" + thisID).val();
-//console.log(scheduleText);
-
-scheduleListArr[thisID] = scheduleText;
-console.log(scheduleListArr);
-
+   
 
 //save
 var newArray = JSON.stringify(scheduleListArr);
-(localStorage.setItem("scheduleListArr", newArry));
+(localStorage.setItem("scheduleListArr", newArray));
 }
 
 displaySchedule();
