@@ -10,26 +10,10 @@ var currentTimeEl = $("#currentDay");
 currentTimeEl.text(currentTimeDate);
 
 var thisID = null;
-/*
-var loadScheduleArrayItem = function() {
 
-    if (localStorage.getItem('scheduleListArr') != null){
-        //push 
-        var stringOfArray = localStorage.getItem("scheduleListArr");
-        console.log(stringOfArray);
-         scheduleListArr = JSON.parse(stringOfArray);   
-
-        console.log(scheduleListArr);
-    } 
-    else {
-        scheduleListArr = ["","","","","","","","",]
-    }
-}*/
 
 var displaySchedule = function() {
-//load tasks from storage
-//if local storage is not empty
-//loadScheduleArrayItem();
+
 
 //loop through everything and display it
   
