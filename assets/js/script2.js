@@ -88,7 +88,7 @@ loadScheduleArrayItem();
 
         //save box
         var saveBoxEl = $("<div>").attr("id","save-box-" + i).addClass("col-1 saveBtn"); 
-        var saveIconEl = $("<div>").addClass("fa-solid fa-floppy-disk");
+        var saveIconEl = $("<i>").addClass("fa-solid fa-floppy-disk");
         saveBoxEl.append(saveIconEl);
         
        //on click, allows you to edit schedule item
